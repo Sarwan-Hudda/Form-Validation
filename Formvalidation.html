@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="formvalidation2.css">
+    <title>FormValidation</title>
+</head>
+<body>
+    <div class="wrapper">
+        <form action="">
+            <h1>Form Validation</h1>
+            <input type="text" name="" id="name" placeholder="Please Enter your name"> <span class="er"></span><br>
+            <input type="text" name="" id="age" placeholder="Please Enter your age"> <span class="er"></span><br>
+            <input type="text" name="" id="phone" placeholder="Please Enter your Contact number"> <span class="er"></span><br>
+            <input type="text" name="" id="email" placeholder="Please Enter your Email Id"> <span class="er"></span><br>
+           Male <input type="radio" name="r" id="re" class="radio" value="Male">
+           Female <input type="radio" name="r" id="re" class="radio" value="Female">
+           Other <input type="radio" name="r" id="re" class="radio" value="Other">
+           <span class="er"></span>
+        <br>
+           <input type="submit" value="Submit">
+        </form>
+    
+        
+    </div>
+    <script>
+      let form = document.querySelector('form')
+       let radio = document.querySelectorAll('.radio');
+        form.onsubmit = (e)=>{
+            e.preventDefault();
+           
+        let name = document.querySelector('#name')
+        let age = document.querySelector('#age')
+        let phone = document.querySelector('#phone')
+        let email = document.querySelector('#email')
+
+       
+         
+        let nameExp = /^[a-z A-Z]{3,30}$/
+        let AgeExp = /^[0-9]{2}$/
+        let PhoneExp = /^[0-9]{10}$/
+        let EmailExp = /^[a-zA-Z0-9\.\_\+]+\@[a-zA-Z0-9]+\.[a-zA-Z]{2,5}$/
+
+        if(checkElement(name,nameExp,'Please use character between  3-30')){
+            if(checkElement(age,AgeExp,'Please Enter age between 10-99')){
+                if(checkElement(phone,PhoneExp,'Please Enter a valid contact number')){
+                    if(checkElement(email,EmailExp,'Please Enter a valid Email')){
+                        if(checkRadio(radio,'Please select atleast one')){
+                            form.submit();
+                        }
+                    }
+                }
+            }
+        }
+
+            function checkElement(inputElement, regex, msg){
+                if(inputElement.value.match(regex)){
+                    inputElement.nextElementSibling.innerHTML = '';
+                    inputElement.classList.remove('formerror');
+                    return true;
+                }
+                else{
+                    inputElement.nextElementSibling.innerHTML = msg;
+                    inputElement.classList.add('formerror');
+                    return false;
+                } 
+            }
+            function checkRadio(inputRadio,msg){
+                let flag = 0
+               inputRadio.forEach((rdio)=>{
+            
+                if(rdio.checked){
+                    flag = 1;
+                }
+               })
+               if(flag == 0){
+                radio[radio.length-1].nextElementSibling.innerHTML =  msg;
+                
+                
+                // inputRadio.classList.add('formerror');
+                return false;
+               }
+               else{
+                radio[radio.length-1].nextElementSibling.innerHTML =  '';
+                // inputRadio.classList.remove('formerror  ');
+                return true;
+               }
+            }
+        }
+
+    </script>
+</body>
+</html>
